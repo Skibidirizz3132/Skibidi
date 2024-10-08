@@ -1,0 +1,30 @@
+local player = game.Players.LocalPlayer
+local usernameToFollow = "TargetUsername" -- Replace with the target username
+local targetPlayer = game.Players:FindFirstChild(usernameToFollow)
+
+if targetPlayer then
+    local mouse = player:GetMouse()
+    local gui = Instance.new("ScreenGui", player.PlayerGui)
+    local frame = Instance.new("Frame", gui)
+    
+    frame.Size = UDim2.new(0, 100, 0, 100)
+    frame.Position = UDim2.new(0.5, -50, 0.5, -50)
+    frame.BackgroundColor3 = Color3.new(1, 0, 0)
+    
+    local function onInputBegan(input)
+        if input.UserInputType == Enum.UserInputType.MouseButton1 then
+            local fKey = Enum.KeyCode.F
+            game:GetService("UserInputService"):InputBegan(fKey, false)
+        end
+    end
+
+    mouse.Button1Down:Connect(onInputBegan)
+
+    local function moveGui()
+        frame.Position = UDim2.new(0, mouse.X - 50, 0, mouse.Y - 50)
+    end
+
+    mouse.Move:Connect(moveGui)
+else
+    warn("Player not found")
+end
